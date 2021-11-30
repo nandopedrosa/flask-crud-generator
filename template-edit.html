@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if #MODEL# %}
+        Editar #MODEL#
+    {% else %}
+        Criar #MODEL#
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="p-3 m-3">
+        <div class="row mb-2">
+            <div class="col-sm-12">
+                {% if #MODEL# %}
+                <h1>Editar #MODEL#</h1>
+                {% else %}
+                <h1>Criar #MODEL#</h1>
+                {% endif %}                
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                {% if #MODEL# %}
+                <form action="{{ url_for('#MODEL#.update', id=#MODEL#.id) }}" method="post">
+                {% else %}
+                <form action="{{ url_for('#MODEL#.create') }}" method="post">
+                {% endif %}
+                    <input type="hidden" name="id" value="{{ #MODEL#.id if #MODEL# }}">                  
+                    #FORM_FIELDS#
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    <a class="btn btn-light" href="{{ url_for('#MODEL#.list') }}" role="button">Voltar</a>                            
+                </form>
+            </div>
+            <!-- End of Main Content -->
+        </div>
+    </div>
+</div>
+
+{% endblock %}

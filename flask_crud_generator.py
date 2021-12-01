@@ -1,5 +1,5 @@
 import os
-import config
+import crud_config as config
 
 
 def __get_route_signature(name: str, model: str, login_required: bool, methods: str, has_param=False, param="id") -> str:

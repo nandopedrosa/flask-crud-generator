@@ -1,6 +1,6 @@
 #repository specific
 output/
-config.py
+crud_config.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

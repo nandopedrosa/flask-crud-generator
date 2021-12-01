@@ -1,7 +1,7 @@
-model='disciplina'
+model='assunto'
 login_required=True
-model_class_name='Disciplina'
-model_list_name='Disciplinas' # used in list.html
+model_class_name='Assunto'
+model_list_name='Assuntos' # used in list.html
 
 # field_name should be the same name used in the DBMS
 # field_type affects how we render in the html file

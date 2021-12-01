@@ -269,6 +269,7 @@ def generate_all(model: str, model_class_name: str, login_required: bool):
         os.makedirs(template_directory)
 
     # generate files
+    f = open(os.path.join(target_directory, "__init__.py"), "w")
     generate_view(model, login_required, target_directory)
     generate_service(model, model_class_name, target_directory)
     generate_dao(model, model_class_name, target_directory)

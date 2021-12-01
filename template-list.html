@@ -3,43 +3,41 @@
 {% block title %}#TITLE#{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="p-3 m-3">
-        <div class="row mb-2">
-            <div class="col-sm-12">                
-                <h1>#HEADER#</h1>                
-                <hr>
-            </div>
-        </div>
-        <div class="row mb-5">
-            <div class="col-sm-12">
-                <a href="{{ url_for('#MODEL#.create') }}" role="button" class="btn btn-primary">Adicionar #MODEL#</a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <table id="main_table" class="table table-striped">
-                    <thead>
-                      <tr>                        
-                       #TABLE_HEADER#
-                      </tr>
-                    </thead>
-                    <tbody>
-                        {% for #MODEL# in model_collection %}
-                        <tr>
-                          #TABLE_DATA#
-                          <td>
-                            <button type="button" model-id="{{#MODEL#.id}}" title="Deletar" onclick="deletar(this,'#MODEL#')" class="btn btn-sm btn-danger me-2 mt-1"><i class="bi bi-trash"></i></button>
-                            <a class="btn btn-primary btn-sm mt-1 " href="{{ url_for('#MODEL#.update',id=#MODEL#.id) }}" role="button"><i class="bi bi-pencil"></i></a>                            
-                          </td>                    
-                        </tr>
-                      {% endfor %}                     
-                    </tbody>
-                  </table>                
-            </div>
-            <!-- End of Main Content -->
+<div class="container">    
+    <div class="row mb-2">
+        <div class="col-sm-12">                
+            <h1>#HEADER#</h1>                
+            <hr>
         </div>
     </div>
+    <div class="row mb-5">
+        <div class="col-sm-12">
+            <a href="{{ url_for('#MODEL#.create') }}" role="button" class="btn btn-primary">Adicionar #MODEL#</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <table id="main_table" class="table table-striped">
+                <thead>
+                  <tr>                        
+                    #TABLE_HEADER#
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for #MODEL# in model_collection %}
+                    <tr>
+                      #TABLE_DATA#
+                      <td>
+                        <button type="button" model-id="{{#MODEL#.id}}" title="Deletar" onclick="deletar(this,'#MODEL#')" class="btn btn-sm btn-danger me-2 mt-1"><i class="bi bi-trash"></i></button>
+                        <a class="btn btn-primary btn-sm mt-1 " href="{{ url_for('#MODEL#.update',id=#MODEL#.id) }}" role="button"><i class="bi bi-pencil"></i></a>                            
+                      </td>                    
+                    </tr>
+                  {% endfor %}                     
+                </tbody>
+              </table>                
+        </div>
+        <!-- End of Main Content -->
+    </div>    
 </div>
 
 <!-- Datatables -->

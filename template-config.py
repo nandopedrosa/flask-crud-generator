@@ -1,13 +1,15 @@
-model='disciplina'
+model='tag'
 login_required=True
-model_class_name='Disciplina'
-model_list_name='Disciplinas' # used in list.html
+model_class_name='Tag'
+model_list_name='Tags' # used in list.html
 
 # field_name should be the same name used in the DBMS
 # field_type affects how we render in the html file
 # mandatory affects if we put a "*"" after the field label
 model_fields=[
-    {"field_name" : "name", "field_label" : "Nome", "field_type" : "textfield" , "mandatory" : "y" }    
+    {"field_name" : "code", "field_label" : "Código", "field_type" : "textfield" , "mandatory" : "y" },
+    {"field_name" : "title", "field_label" : "Título", "field_type" : "textfield" , "mandatory" : "y"},
+    {"field_name" : "description", "field_label" : "Descrição", "field_type" : "textarea" , "mandatory" : "n"}    
 ]
 
 #min and max length for textfield types

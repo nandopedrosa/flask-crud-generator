@@ -80,9 +80,7 @@ def generate_service(model: str, model_class_name: str, target_directory: str):
     # Validate
     f.write(
         f"def __validate_{model}() -> Validation: #fill with validation parameters\n")
-    f.write("""\tif(not Validation.filled([])): #fill with mandatory parameters
-        \treturn Validation(message="Por favor, preencha todos os campos obrigatórios.",
-                          status=Validation.STATUS_ERROR)""")
+    f.write("\tif(not Validation.filled([])): #fill with mandatory parameters\n\t\treturn Validation(message='Por favor, preencha todos os campos obrigatórios.',status=Validation.STATUS_ERROR)")
     f.write("\n\n")
     f.write("\t#fill with other validations")
     f.write("\n\n")
@@ -91,38 +89,31 @@ def generate_service(model: str, model_class_name: str, target_directory: str):
     # Save
     f.write(
         f"def save(r: request) -> Validation:\n\tid = r.form['id'] if 'id' in r.form else None\n\t#fill with other request parameters\n\n\tv = __validate_{model}() #fill with validation parameters\n\n")
-    f.write(f"""\tif v.status == Validation.STATUS_OK:\n\t\t{model} = {model_class_name}(dict(r.form))
-        if id:
-            dao.update({model})
-            v.message = "{model_class_name} atualizado com sucesso."
-        else:  
-            id = dao.insert({model})
-            v.message = "{model_class_name} criado com sucesso."
-
-        v.payload = id\n\n""")
+    f.write(f"\tif v.status == Validation.STATUS_OK:\n\t\t{model} = {model_class_name}(dict(r.form))\n\t\tif id:\n\t\t\tdao.update({model})\n\t\t\tv.message = '{model_class_name} atualizado com sucesso.'\n\t\telse:\n\t\t\tid = dao.insert({model})\n\t\t\tv.message = '{model_class_name} criado com sucesso.'\n\n\t\tv.payload = id\n\n")
     f.write("\treturn v\n\n")
 
     # List
     f.write(
-        f"""def list() -> List[{model_class_name}]:\n\treturn dao.fetch_all()\n\n""")
+        f"def list() -> List[{model_class_name}]:\n\treturn dao.fetch_all()\n\n")
 
     # Delete
-    f.write("""def delete(id: int):\n\tdao.delete(id)\n\n""")
+    f.write("def delete(id: int):\n\tdao.delete(id)\n\n")
 
     # Find
     f.write(
-        f"""def find_by_id(id: int) -> {model_class_name}:\n\treturn dao.find_by_id(id)\n\n""")
+        f"def find_by_id(id: int) -> {model_class_name}:\n\treturn dao.find_by_id(id)\n\n")
 
 
 def generate_dao(model: str, model_class_name: str, target_directory: str):
     f = open(os.path.join(target_directory, "dao.py"), "w")
 
     # imports
-    f.write(f"""from typing import List
-from app.{model}.model import Tag
-from app.db import get_db
-from flask import g
-from app.util.db_converter import build_sql, lastrowid""")
+    f.write(f"from typing import List\n")
+    f.write(f"from app.{model}.model import {model_class_name}\n")
+    f.write(f"from app.db import get_db\n")
+    f.write(f"from flask import g\n")
+    f.write(f"from app.util.db_converter import build_sql, lastrowid\n")
+    
     f.write("\n\n")
 
     # Insert
@@ -167,7 +158,7 @@ from app.util.db_converter import build_sql, lastrowid""")
     # Update
     f.write(f"def update({model}: {model_class_name}):\n")
     f.write("\tdb = get_db()\n\tcur = db.cursor()\n")
-    f.write(f"\tsql = build_sql('UPDATE tag SET ... WHERE ...') #fill with parameters\n")
+    f.write(f"\tsql = build_sql('UPDATE {model} SET ... WHERE ...') #fill with parameters\n")
     f.write("\tcur.execute(sql,()) #fill with parameters\n")
     f.write("\tdb.commit()")
 
@@ -262,7 +253,7 @@ def generate_all(model: str, model_class_name: str, login_required: bool):
     current_directory = os.getcwd()
     target_directory = os.path.join(current_directory, "output", f"{model}")
     template_directory = os.path.join(
-        current_directory, "output", f"{model}", "templates")
+        current_directory, "output", f"{model}", "templates", f"{model}")
     if not os.path.exists(target_directory):
         os.makedirs(target_directory)
     if not os.path.exists(template_directory):
